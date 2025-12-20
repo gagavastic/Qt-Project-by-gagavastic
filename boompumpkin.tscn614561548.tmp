@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://du5q5apo6qvh4"]
+
+[ext_resource type="Texture2D" uid="uid://bexbmfgm77xvn" path="res://тыквавзрывня-Photoroom.png" id="1_by5a7"]
+[ext_resource type="Script" uid="uid://bnws8onfqmlwg" path="res://boompumpkin.gd" id="1_o0np3"]
+[ext_resource type="Texture2D" uid="uid://ccfofnicov1pk" path="res://взрыв-Photoroom.png" id="2_o0np3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4te7h"]
+radius = 6.708204
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ums1c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_by5a7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_o0np3")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_26mey"]
+radius = 83.725746
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_o0np3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 0
+shape = SubResource("CircleShape2D_4te7h")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-2, -23)
+sprite_frames = SubResource("SpriteFrames_ums1c")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+light_mask = 0
+shape = SubResource("CircleShape2D_26mey")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

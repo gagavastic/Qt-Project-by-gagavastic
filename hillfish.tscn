@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://b2nocrb8x2ds8"]
+
+[ext_resource type="Texture2D" uid="uid://dbfpu5fgv0sf1" path="res://hill.fish.png" id="1_u2gg6"]
+[ext_resource type="Texture2D" uid="uid://d1oxh10rq8bqu" path="res://hill.fish2.png" id="2_6ahkk"]
+
+[sub_resource type="GDScript" id="GDScript_8abkl"]
+resource_name = "fish"
+script/source = "extends Area2D
+@onready var player = $\"../seal\"
+@onready var pumpkin = $\"../CharacterBody2D3\"
+func _on_body_entered(body: Node2D) -> void:
+	print(\"fdadf\")
+	if body == player:
+		print(\"vss\")
+		player.hp += 2
+		print(player.hp)
+		queue_free()
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u2gg6"]
+radius = 163.68874
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6ahkk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_u2gg6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_6ahkk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Area2D" type="Area2D"]
+script = SubResource("GDScript_8abkl")
+metadata/_edit_horizontal_guides_ = [-93.0]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_u2gg6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6ahkk")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

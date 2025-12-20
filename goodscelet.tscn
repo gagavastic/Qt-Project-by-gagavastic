@@ -1,0 +1,277 @@
+[gd_scene load_steps=12 format=3 uid="uid://dxgsg7sjy8vfs"]
+
+[ext_resource type="Texture2D" uid="uid://y2awnoyp2n4y" path="res://скелетон-Photoroom (4).png" id="2_cb2tg"]
+[ext_resource type="Texture2D" uid="uid://dudfcsjxg1tvq" path="res://скелетон-Photoroom (6).png" id="3_v7b8b"]
+[ext_resource type="Texture2D" uid="uid://dq6v2nmpxbqne" path="res://скелетон-Photoroom (1).png" id="4_hkpkg"]
+[ext_resource type="Texture2D" uid="uid://cmufblfq0csn1" path="res://скелетон-Photoroom (3).png" id="5_dtnjt"]
+[ext_resource type="Texture2D" uid="uid://bim2dnkh8e5h3" path="res://скелетон-Photoroom (2).png" id="6_7xw6q"]
+
+[sub_resource type="GDScript" id="GDScript_ib730"]
+resource_name = "goodsceley"
+script/source = "extends CharacterBody2D
+
+
+const SPEED = 50.0
+const JUMP_VELOCITY = -246.0
+const KNOCKBACK_SPEED = 3000  # Скорость отбрасывания
+const KNOCKBACK_DURATION = 0.3  # Длительность отбрасывания
+
+var gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\") or 980.0
+var hp = 10
+var damage = 10
+var is_chasing = false 
+var direction = Vector2.ZERO 
+@onready var player = $\"../seal\"
+@onready var anim = $AnimatedSprite2D
+var can_attack = false
+@onready var timer = $Timer
+var atacuu = false
+var ghgh = false
+var is_attacking = false 
+var is_knocked_back = false  # Новое состояние - отбрасывание
+var knockback_timer = 0.0  # Таймер для отбрасывания
+var knockback_direction = Vector2.ZERO  # Направление отбрасывания
+
+func _physics_process(delta: float) -> void:
+	if not player:
+		return
+	
+	# Обработка отбрасывания
+	if is_knocked_back:
+		knockback_timer -= delta
+		if knockback_timer <= 0:
+			is_knocked_back = false
+		else:
+			# Применяем отбрасывание
+			velocity.x = knockback_direction.x * KNOCKBACK_SPEED
+			# Гравитация все еще действует
+			if not is_on_floor():
+				velocity.y += 100
+			move_and_slide()
+			return  # Выходим из функции, чтобы не выполнялась обычная логика
+	
+	# Обычная логика врага (только если не в состоянии отбрасывания)
+	# Гравитация
+	if not is_on_floor():
+		velocity.y += 10
+	else:
+		if is_chasing and player.position.y < position.y and not is_attacking:
+			jump()
+
+	direction = (player.position - position).normalized()
+	
+
+	if is_chasing:
+		velocity.x = direction.x * SPEED
+	else:
+		velocity.x = 0
+
+	if is_attacking:
+		pass
+	elif is_chasing:
+		anim.play(\"run\")
+	else:
+		anim.play(\"default\")
+
+	move_and_slide()
+	
+	# Поворот спрайта
+	update_sprite_direction()
+
+func update_sprite_direction():
+	if direction.x < 0:
+		anim.flip_h = true
+	elif direction.x > 0:
+		anim.flip_h = false
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body == player and not is_knocked_back:
+		is_chasing = true
+
+func _on_area_2d_body_exited(body: Node2D) -> void:
+	if body == player:
+		is_chasing = false
+
+func jump():
+	velocity.y = JUMP_VELOCITY
+
+func sceletbol():
+	if can_attack:
+		hp -= 1
+		queue_free()
+		print(\"attacka прошла успешно\")
+
+func sceletdeath():
+	queue_free()
+	
+func fhdf():
+	if hp <= 0:
+		sceletdeath()
+		print(\"враг поежден\")
+
+func attakuu(_a):
+	if atacuu and player:
+		print(player.hp)
+		player.hp -= 1
+		if player.hp <= 0:
+			sealleave()  
+
+func _on_area_2d_2_body_entered(_body: Node2D) -> void:
+	if _body == player and not is_knocked_back:
+		ghgh = true
+		atacuu = true
+		is_attacking = true  
+		anim.play(\"attack\")  
+		print(\"фаааааааааа\")
+		timer.start()
+
+func _on_area_2d_2_body_exited(_body: Node2D) -> void:
+	if _body == player:
+		atacuu = false
+		ghgh = false
+		is_attacking = false 
+		timer.stop()
+		print(\"сольььььььь\")
+
+func _on_timer_timeout() -> void:
+	attakuu(player)
+
+func _on_animated_sprite_2d_animation_finished():
+	if anim.animation == \"attack\":
+		is_attacking = false 
+
+func sealleave():
+	if player:
+		player.queue_free()
+		
+func take_damage(a):
+	hp -= a
+
+# Функция для активации отбрасывания
+func apply_knockback(knockback_dir: Vector2):
+	if not is_knocked_back:  # Защита от повторного отбрасывания
+		is_knocked_back = true
+		knockback_timer = KNOCKBACK_DURATION
+		knockback_direction = knockback_dir
+		
+		# Останавливаем текущие действия
+		is_attacking = false
+		is_chasing = false
+		atacuu = false
+		ghgh = false
+		timer.stop()
+		anim.play(\"default\")  # Или добавьте анимацию \"knockback\"
+
+func _on_area_2d_3_body_entered(body: Node2D) -> void:
+	if body == player:
+		# Определяем направление отбрасывания (например, вправо)
+		apply_knockback(Vector2.RIGHT)
+		print(\"fdfdfd - отбрасывание вправо\")
+
+func _on_area_2d_4_body_entered(body: Node2D) -> void:
+	if body == player:
+		# Определяем направление отбрасывания (например, влево)
+		apply_knockback(Vector2.LEFT)
+		print(\"ddd - отбрасывание влево\")
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qw27i"]
+radius = 43.0
+height = 86.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_81lie"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_cb2tg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_v7b8b")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_hkpkg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_dtnjt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_7xw6q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_hkpkg")
+}],
+"loop": true,
+"name": &"run",
+"speed": 2.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xls52"]
+radius = 489.53244
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pqeea"]
+radius = 228.72035
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1kywk"]
+size = Vector2(218.75, 58)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = SubResource("GDScript_ib730")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 42)
+shape = SubResource("CapsuleShape2D_qw27i")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(6.9999924, -9.749994)
+scale = Vector2(0.17404547, 0.36147544)
+sprite_frames = SubResource("SpriteFrames_81lie")
+animation = &"attack"
+autoplay = "attack"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+light_mask = 0
+position = Vector2(1, 0)
+shape = SubResource("CircleShape2D_xls52")
+
+[node name="Area2D2" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(1, 34)
+shape = SubResource("CircleShape2D_pqeea")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.385
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+
+[node name="Area2D3" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D3"]
+position = Vector2(519.375, 43)
+shape = SubResource("RectangleShape2D_1kywk")
+
+[node name="Area2D4" type="Area2D" parent="Area2D3"]
+position = Vector2(2, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D3/Area2D4"]
+position = Vector2(-462, 59)
+shape = SubResource("RectangleShape2D_1kywk")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Area2D2" to="." method="_on_area_2d_2_body_entered"]
+[connection signal="body_exited" from="Area2D2" to="." method="_on_area_2d_2_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="Area2D3" to="." method="_on_area_2d_3_body_entered"]
+[connection signal="body_entered" from="Area2D3/Area2D4" to="." method="_on_area_2d_3_body_entered"]
