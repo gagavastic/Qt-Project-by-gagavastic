@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://nndb6voxjalf"]
+
+[sub_resource type="GDScript" id="GDScript_ooqmt"]
+script/source = "extends Label
+
+@onready var player = $\"../seal\"
+var a = 1
+
+func d():
+	hide()
+
+func _on_area_2d_body_entered(_body: Node2D) -> void:
+	if _body == player:
+		show()
+		
+	
+
+
+func _on_area_2d_body_exited(_body: Node2D) -> void:
+	if _body == player: 
+		hide()
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kp246"]
+radius = 129.3561
+
+[node name="Label" type="Label"]
+offset_left = 5.0
+offset_top = -26.0
+offset_right = 345.0
+offset_bottom = 101.0
+text = "чтоб бы аттаковать нажми x 
+или таб
+ но аттаковать ты можешь только если 
+враг находится
+ в зоне досягаемости нажми с или z
+ что ы бросить тыквобомбу удачи
+"
+script = SubResource("GDScript_ooqmt")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+light_mask = 0
+position = Vector2(134, 76)
+shape = SubResource("CircleShape2D_kp246")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

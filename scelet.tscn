@@ -1,0 +1,93 @@
+[gd_scene load_steps=11 format=3 uid="uid://rb10mx6ctp0t"]
+
+[ext_resource type="Texture2D" uid="uid://dq6v2nmpxbqne" path="res://скелетон-Photoroom (1).png" id="1_kt4rp"]
+[ext_resource type="Script" uid="uid://cpowy5nu0dbfk" path="res://scelet.gd" id="1_pqeea"]
+[ext_resource type="Texture2D" uid="uid://y2awnoyp2n4y" path="res://скелетон-Photoroom (4).png" id="1_xls52"]
+[ext_resource type="Texture2D" uid="uid://cmufblfq0csn1" path="res://скелетон-Photoroom (3).png" id="2_o8c2p"]
+[ext_resource type="Texture2D" uid="uid://dudfcsjxg1tvq" path="res://скелетон-Photoroom (6).png" id="3_pqeea"]
+[ext_resource type="Texture2D" uid="uid://bim2dnkh8e5h3" path="res://скелетон-Photoroom (2).png" id="3_xls52"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qw27i"]
+radius = 26.0
+height = 106.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_81lie"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_xls52")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_pqeea")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_kt4rp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_o8c2p")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_xls52")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_kt4rp")
+}],
+"loop": true,
+"name": &"run",
+"speed": 2.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xls52"]
+radius = 489.53244
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pqeea"]
+radius = 136.93794
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_pqeea")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 0
+position = Vector2(-13, 11)
+shape = SubResource("CapsuleShape2D_qw27i")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-6.9999986, 2.9999993)
+scale = Vector2(0.14383562, 0.17256637)
+sprite_frames = SubResource("SpriteFrames_81lie")
+animation = &"attack"
+autoplay = "attack"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+light_mask = 2
+position = Vector2(-8, 11)
+shape = SubResource("CircleShape2D_xls52")
+
+[node name="Area2D2" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+light_mask = 0
+position = Vector2(-10, 11)
+shape = SubResource("CircleShape2D_pqeea")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.385
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Area2D2" to="." method="_on_area_2d_2_body_entered"]
+[connection signal="body_exited" from="Area2D2" to="." method="_on_area_2d_2_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
