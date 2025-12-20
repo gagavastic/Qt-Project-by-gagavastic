@@ -1,0 +1,69 @@
+[gd_scene load_steps=8 format=3 uid="uid://bmfv465yjq1dc"]
+
+[ext_resource type="Texture2D" uid="uid://el6oryy0h8wb" path="res://tile.png" id="1_n51xl"]
+
+[sub_resource type="GDScript" id="GDScript_n51xl"]
+resource_name = "meteorr"
+script/source = "extends CharacterBody2D
+
+@onready var timer = $Timer
+@onready var player = $\"../seal\"
+
+func _physics_process(delta: float) -> void:
+	velocity.y += delta*100
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body == player:
+		player.hp -= 1
+		push_error(player.hp)
+	else:
+		position.y -= 200
+"
+
+[sub_resource type="GDScript" id="GDScript_ndumj"]
+resource_name = "meteor"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n51xl"]
+radius = 38.052597
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n51xl"]
+texture = ExtResource("1_n51xl")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_xunib"]
+sources/1 = SubResource("TileSetAtlasSource_n51xl")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ohe0j"]
+radius = 33.01515
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = SubResource("GDScript_n51xl")
+
+[node name="Area2D" type="Area2D" parent="."]
+script = SubResource("GDScript_ndumj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_n51xl")
+
+[node name="Timer" type="Timer" parent="Area2D"]
+
+[node name="TileMap" type="TileMap" parent="Area2D"]
+tile_set = SubResource("TileSet_xunib")
+format = 2
+layer_0/tile_data = PackedInt32Array(-65536, 196609, 0, 0, 196609, 0, 1, 196609, 0, 65536, 196609, 0, 131071, 196609, 0, 65535, 196609, 0, 65534, 196609, 0, -2, 196609, 0, -1, 196609, 0, -65537, 196609, 0, -65535, 196609, 0, -131072, 196609, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ohe0j")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

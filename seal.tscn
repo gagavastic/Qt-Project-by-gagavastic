@@ -1,0 +1,192 @@
+[gd_scene load_steps=19 format=3 uid="uid://dscvdqdidmmyq"]
+
+[ext_resource type="Script" uid="uid://bxabme24qq45x" path="res://seal.gd" id="1_d4dhe"]
+[ext_resource type="Texture2D" uid="uid://cguk04rdyt2yx" path="res://unnamed (3).png" id="1_fclou"]
+[ext_resource type="Texture2D" uid="uid://bu73wqvmvdrn8" path="res://unnamed (2).png" id="3_l7uaq"]
+[ext_resource type="Texture2D" uid="uid://dbr88dgxlna0l" path="res://esataka-Photoroom.png" id="3_ysd6k"]
+[ext_resource type="Texture2D" uid="uid://fj2ygjphjllb" path="res://esataka2-Photoroom.png" id="4_ng0mj"]
+[ext_resource type="Texture2D" uid="uid://bsj7nh81k14rt" path="res://hjjjjjjjjj.png" id="4_ysd6k"]
+[ext_resource type="Texture2D" uid="uid://cnqhhyjew01hx" path="res://unnamed.png" id="5_ng0mj"]
+[ext_resource type="Texture2D" uid="uid://cqxbhtyyrjkqa" path="res://атакарыбой1-Photoroom.png" id="6_oit0b"]
+[ext_resource type="Texture2D" uid="uid://cxrxn2dli2h8o" path="res://атакарыбой2-Photoroom.png" id="7_q8qir"]
+[ext_resource type="Texture2D" uid="uid://ci0dqhl6q02kw" path="res://атакарыбой3-Photoroom.png" id="8_pcr5s"]
+[ext_resource type="Texture2D" uid="uid://5snkhkt0726c" path="res://атакарыбой4-Photoroom.png" id="9_q0clf"]
+[ext_resource type="Texture2D" uid="uid://b5xensi0np8rf" path="res://атакарыбой5-Photoroom.png" id="10_snjxx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7hcuo"]
+size = Vector2(116, 43)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6nenw"]
+animations = [{
+"frames": [{
+"duration": 0.71,
+"texture": ExtResource("1_fclou")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ysd6k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ng0mj")
+}],
+"loop": true,
+"name": &"ataka",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_fclou")
+}, {
+"duration": 1.21,
+"texture": ExtResource("3_l7uaq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_oit0b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_q8qir")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_pcr5s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_q0clf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_snjxx")
+}],
+"loop": true,
+"name": &"fishatak",
+"speed": 11.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_l7uaq")
+}, {
+"duration": 3.01,
+"texture": ExtResource("4_ysd6k")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_fclou")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_l7uaq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ysd6k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ng0mj")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 3.91,
+"texture": ExtResource("3_l7uaq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ng0mj")
+}],
+"loop": true,
+"name": &"run",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d4dhe"]
+size = Vector2(10600000, 6700000.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l7uaq"]
+size = Vector2(99, 65)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ysd6k"]
+size = Vector2(112, 82.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ng0mj"]
+size = Vector2(128, 59.25)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+position = Vector2(-15, 0)
+script = ExtResource("1_d4dhe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 0
+position = Vector2(48, 11.5)
+shape = SubResource("RectangleShape2D_7hcuo")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CollisionShape2D"]
+visibility_layer = 2
+position = Vector2(-8.000002, 1.5)
+scale = Vector2(0.80606055, 1)
+sprite_frames = SubResource("SpriteFrames_6nenw")
+animation = &"ataka"
+autoplay = "default"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+light_mask = 0
+visibility_layer = 32
+position = Vector2(109, 17.500002)
+scale = Vector2(1e-05, 1e-05)
+shape = SubResource("RectangleShape2D_d4dhe")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+drag_vertical_enabled = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = -545.0
+offset_top = -371.0
+offset_right = -390.0
+offset_bottom = -292.0
+
+[node name="Label2" type="Label" parent="."]
+offset_left = -542.0
+offset_top = -258.0
+offset_right = -407.0
+offset_bottom = -221.0
+text = "fffff"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.001
+
+[node name="Area2D2" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(-38, 16.5)
+shape = SubResource("RectangleShape2D_l7uaq")
+
+[node name="Area2D3" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D3"]
+position = Vector2(48, 57.75)
+shape = SubResource("RectangleShape2D_ysd6k")
+
+[node name="Area2D4" type="Area2D" parent="."]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D4"]
+position = Vector2(53, -38.375)
+shape = SubResource("RectangleShape2D_ng0mj")
+
+[node name="Timer2" type="Timer" parent="."]
+wait_time = 0.234
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="Area2D2" to="." method="_on_area_2d_2_body_entered"]
+[connection signal="body_entered" from="Area2D3" to="." method="_on_area_2d_3_body_entered"]
+[connection signal="body_exited" from="Area2D3" to="." method="_on_area_2d_3_body_exited"]
+[connection signal="body_entered" from="Area2D4" to="." method="_on_area_2d_4_body_entered"]
+[connection signal="body_exited" from="Area2D4" to="." method="_on_area_2d_4_body_exited"]
+[connection signal="timeout" from="Timer2" to="." method="_on_timer_2_timeout"]

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://csmq81a42v7v8"]
+
+[ext_resource type="Texture2D" uid="uid://c4c2hva2w63ex" path="res://sceledragon-Photoroom.png" id="1_2rrk0"]
+[ext_resource type="Texture2D" uid="uid://bkiorgn67qaot" path="res://sceledragon2-Photoroom.png" id="2_w0pc1"]
+[ext_resource type="Texture2D" uid="uid://bwd33pcilmgp1" path="res://sceledragon3-Photoroom.png" id="3_oucg5"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ud2k5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_2rrk0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_w0pc1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_oucg5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_ud2k5")
+autoplay = "default"

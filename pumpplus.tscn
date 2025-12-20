@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=3 uid="uid://cay6no506dn1o"]
+
+[ext_resource type="Texture2D" uid="uid://bexbmfgm77xvn" path="res://тыквавзрывня-Photoroom.png" id="1_qkvem"]
+[ext_resource type="Texture2D" uid="uid://ccfofnicov1pk" path="res://взрыв-Photoroom.png" id="2_3ah6d"]
+
+[sub_resource type="GDScript" id="GDScript_qkvem"]
+resource_name = "pupmplus"
+script/source = "extends Area2D
+@onready var player = $\"../seal\"
+@onready var pumpkin = $\"../CharacterBody2D3\"
+
+func _on_body_entered(body: Node2D) -> void:
+	if body == player:
+		print(\"vss\")
+		pumpkin.fgh += 2
+		print(pumpkin.fgh)
+		queue_free()
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u2gg6"]
+radius = 163.68874
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tnotc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_qkvem")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_3ah6d")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}, {
+"frames": [],
+"loop": false,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[node name="Area2D" type="Area2D"]
+script = SubResource("GDScript_qkvem")
+metadata/_edit_horizontal_guides_ = [-93.0]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_u2gg6")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+position = Vector2(5, -3)
+scale = Vector2(1.1022727, 1)
+sprite_frames = SubResource("SpriteFrames_tnotc")
+autoplay = "default"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

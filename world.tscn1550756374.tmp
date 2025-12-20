@@ -1,0 +1,64 @@
+[gd_scene load_steps=9 format=3 uid="uid://uvwd38hue18i"]
+
+[ext_resource type="Texture2D" uid="uid://el6oryy0h8wb" path="res://tile.png" id="1_f3sb7"]
+[ext_resource type="PackedScene" uid="uid://dscvdqdidmmyq" path="res://seal.tscn" id="2_fj7yv"]
+[ext_resource type="PackedScene" uid="uid://rb10mx6ctp0t" path="res://scelet.tscn" id="3_tlwt5"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fj7yv"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_tlwt5"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fj7yv"]
+texture = ExtResource("1_f3sb7")
+0:0/0 = 0
+0:0/0/material = SubResource("CanvasItemMaterial_tlwt5")
+1:0/0 = 0
+1:0/0/material = SubResource("CanvasItemMaterial_tlwt5")
+2:0/0 = 0
+2:0/0/material = SubResource("CanvasItemMaterial_tlwt5")
+3:0/0 = 0
+3:0/0/material = SubResource("CanvasItemMaterial_tlwt5")
+0:1/0 = 0
+0:1/0/material = SubResource("CanvasItemMaterial_tlwt5")
+1:1/0 = 0
+1:1/0/material = SubResource("CanvasItemMaterial_tlwt5")
+2:1/0 = 0
+2:1/0/material = SubResource("CanvasItemMaterial_tlwt5")
+3:1/0 = 0
+3:1/0/material = SubResource("CanvasItemMaterial_tlwt5")
+0:2/0 = 0
+0:2/0/material = SubResource("CanvasItemMaterial_tlwt5")
+1:2/0 = 0
+1:2/0/material = SubResource("CanvasItemMaterial_tlwt5")
+2:2/0 = 0
+2:2/0/material = SubResource("CanvasItemMaterial_tlwt5")
+3:2/0 = 0
+3:2/0/material = SubResource("CanvasItemMaterial_tlwt5")
+
+[sub_resource type="TileSet" id="TileSet_tlwt5"]
+sources/0 = SubResource("TileSetAtlasSource_fj7yv")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aqk2v"]
+size = Vector2(1224, 20)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+material = SubResource("CanvasItemMaterial_fj7yv")
+tile_set = SubResource("TileSet_tlwt5")
+collision_animatable = true
+format = 2
+layer_0/tile_data = PackedInt32Array(983039, 0, 0, 917504, 65536, 0, 851969, 0, 0, 851970, 65536, 0, 851971, 0, 0, 851972, 0, 0, 851973, 0, 0, 851974, 0, 0, 851975, 0, 0, 851976, 65536, 0, 851977, 0, 0, 851978, 65536, 0, 851979, 0, 0, 851980, 65536, 0, 851981, 0, 0, 851982, 65536, 0, 851983, 0, 0, 851984, 65536, 0, 851985, 0, 0, 851986, 65536, 0, 851987, 0, 0, 851988, 65536, 0, 917525, 0, 0, 917526, 0, 0, 917527, 0, 0, 917528, 65536, 0, 917529, 0, 0, 917530, 65536, 0, 917531, 0, 0, 917532, 65536, 0, 983069, 0, 0, 983070, 65536, 0, 983071, 0, 0, 983072, 65536, 0, 1048609, 0, 0, 1048610, 65536, 0, 1048611, 0, 0, 1048612, 65536, 0, 983075, 0, 0, 983076, 65536, 0, 983077, 0, 0, 983078, 65536, 0, 917543, 0, 0, 917544, 65536, 0, 917545, 0, 0, 917546, 65536, 0, 917547, 0, 0, 917548, 65536, 0, 852011, 0, 0, 852012, 65536, 0, 852013, 0, 0, 852014, 0, 0, 852015, 0, 0, 852016, 0, 0, 852017, 0, 0, 852018, 65536, 0, 852019, 0, 0, 852020, 65536, 0, 852021, 0, 0, 852022, 65536, 0, 852023, 0, 0, 852024, 65536, 0, 786487, 0, 0, 786488, 65536, 0, 786489, 0, 0, 786490, 65536, 0, 786491, 0, 0, 786492, 65536, 0, 786493, 0, 0, 786494, 65536, 0, 786495, 0, 0, 786496, 65536, 0, 786497, 0, 0, 786498, 65536, 0, 786499, 0, 0, 786500, 65536, 0, 720963, 0, 0, 720964, 65536, 0, 720965, 0, 0, 720966, 65536, 0, 720967, 0, 0, 720968, 65536, 0, 720969, 0, 0, 720970, 65536, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0, 917519, 0, 0, 917520, 0, 0, 917521, 0, 0, 917522, 0, 0, 917523, 0, 0, 917524, 0, 0, 851990, 0, 0, 851991, 0, 0, 851992, 0, 0, 851993, 0, 0, 851994, 0, 0, 851995, 0, 0, 851996, 0, 0, 851997, 0, 0, 917533, 0, 0, 917534, 0, 0, 917535, 0, 0, 917536, 0, 0, 852001, 0, 0, 852002, 0, 0, 786467, 0, 0, 786468, 0, 0, 852004, 0, 0, 852005, 0, 0, 852006, 0, 0, 852007, 0, 0, 852008, 0, 0, 852009, 0, 0, 852010, 0, 0, 786474, 0, 0, 786475, 0, 0, 786476, 0, 0, 786477, 0, 0, 786458, 0, 0)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(2, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(634, 239)
+shape = SubResource("RectangleShape2D_aqk2v")
+
+[node name="seal" parent="." instance=ExtResource("2_fj7yv")]
+position = Vector2(289, 49)
+
+[node name="CharacterBody2D2" parent="." instance=ExtResource("3_tlwt5")]
+position = Vector2(234, -94)
